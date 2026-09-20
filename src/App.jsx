@@ -1,5 +1,10 @@
 import React, { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Menu from './pages/Menu';
+import Cart from './pages/Cart';
+import Contact from './pages/Contact';
+import Location from './pages/Location';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import DealCard from './components/DealCard';
@@ -7,7 +12,7 @@ import DessertCard from './components/DessertCard';
 import Footer from './components/Footer';
 import { deals, popularItems } from './data/desserts';
 
-export default function App() {
+function Home() { 
   const dealsScrollRef = useRef(null);
 
   const scrollDeals = (direction) => {
@@ -19,7 +24,6 @@ export default function App() {
       });
     }
   };
-
   return (
     <div className="min-h-screen flex flex-col bg-cream-100 text-brand-black selection:bg-lightblue-light selection:text-brand-black">
       {/* 1. Navbar */}
@@ -115,5 +119,18 @@ export default function App() {
       {/* 6. Footer */}
       <Footer />
     </div>
+  );
+}
+export default function App() { 
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/location" element={<Location />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
