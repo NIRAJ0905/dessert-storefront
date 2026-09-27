@@ -1,86 +1,151 @@
 import React, { useState } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import { ShoppingBag, Menu as MenuIcon, X } from 'lucide-react';
+import { useScrolled, useScrollProgress } from '../hooks/useScrollAnimations';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const scrolled = useScrolled(60);
+  const progress = useScrollProgress();
+
+  const navLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/menu', label: 'Menu' },
+    { to: '/location', label: 'Visit Us' },
+    { to: '/contact', label: 'Contact & Orders' },
+  ];
 
   return (
-    <header className="sticky top-0 z-40 bg-cream-100/90 backdrop-blur-md border-b border-cream-300/80 transition-colors">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand */}
-        <a 
-          href="/" 
-          className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-brand-black hover:text-caramel transition-colors"
-        >
-          Dessert Bar
-        </a>
-
-        {/* Desktop Navigation - separate pages to be added later */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-brand-black">
-          <a href="/" className="hover:text-caramel transition-colors">Home</a>
-          <a href="/menu" className="hover:text-caramel transition-colors">Menu</a>
-          <a href="/contact" className="hover:text-caramel transition-colors">Contact</a>
-          <a href="/location" className="hover:text-caramel transition-colors">Location</a>
-        </nav>
-
-        {/* Cart and Mobile Menu Toggle */}
-        <div className="flex items-center space-x-4">
-          {/* Cart (0) - Navigation/UI element */}
-          <div 
-            id="nav-cart"
-            role="button"
-            tabIndex={0}
-            className="flex items-center space-x-2 text-sm font-semibold bg-white text-brand-black px-4 py-2 rounded-full border border-cream-300 hover:border-lightblue hover:text-brand-black transition-all cursor-pointer shadow-sm"
-          >
-            <ShoppingBag className="w-4 h-4 text-caramel" />
-            <span>Cart (0)</span>
-          </div>
-
-          {/* Mobile hamburger button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-brand-black hover:bg-cream-200 transition-colors focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
-          </button>
-        </div>
+    <>
+      {/* ── Scroll progress bar ──────────────────────────────────────── */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-cream-200">
+        <div
+          className="h-full bg-caramel transition-all duration-100 ease-linear origin-left"
+          style={{ width: `${progress}%` }}
+        />
       </div>
 
-      {/* Mobile dropdown */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-cream-50 border-b border-cream-300 px-4 pt-2 pb-6 space-y-3">
-          <a 
-            href="/" 
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 text-base font-medium text-brand-black hover:bg-cream-200 rounded-md"
-          >
-            Home
-          </a>
-          <a 
-            href="/menu" 
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 text-base font-medium text-brand-black hover:bg-cream-200 rounded-md"
-          >
-            Menu
-          </a>
-          <a 
-            href="/contact" 
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 text-base font-medium text-brand-black hover:bg-cream-200 rounded-md"
-          >
-            Contact
-          </a>
-          <a 
-            href="/location" 
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 text-base font-medium text-brand-black hover:bg-cream-200 rounded-md"
-          >
-            Location
-          </a>
+      {/* Subtle bakery status bar */}
+      <div
+        className={`bg-brand-black text-cream-100 text-xs py-2 px-4 text-center font-medium tracking-wide transition-all duration-300 overflow-hidden ${
+          scrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-10 opacity-100'
+        }`}
+      >
+        <span>Fresh oven batches daily at 8:00 AM & 3:30 PM • Counter pickup in Indiranagar</span>
+      </div>
+
+      {/* ── Main header ─────────────────────────────────────────────── */}
+      <header
+        className={`sticky top-0 z-40 border-b border-cream-300 transition-all duration-300 ${
+          scrolled
+            ? 'bg-cream-100/90 backdrop-blur-md shadow-sm'
+            : 'bg-cream-100'
+        }`}
+      >
+        <div
+          className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
+            scrolled ? 'h-14' : 'h-20'
+          }`}
+        >
+          {/* Brand */}
+          <Link to="/" className="flex flex-col group">
+            <span
+              className={`font-serif font-semibold tracking-wide text-brand-black group-hover:text-caramel transition-all duration-300 ${
+                scrolled ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'
+              }`}
+            >
+              Dessert Bar
+            </span>
+            <span
+              className={`text-[10px] uppercase tracking-[0.22em] text-brand-muted font-medium transition-all duration-300 ${
+                scrolled ? 'opacity-0 max-h-0' : 'opacity-100 max-h-4'
+              }`}
+            >
+              Bakehouse & Patisserie
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-7 text-sm font-medium text-brand-black">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                className={({ isActive }) =>
+                  `transition-colors py-1 relative ${
+                    isActive
+                      ? 'text-caramel font-semibold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-caramel'
+                      : 'text-brand-black hover:text-caramel'
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Cart and Mobile Menu Toggle */}
+          <div className="flex items-center space-x-3">
+            <Link
+              to="/cart"
+              id="nav-cart"
+              className="flex items-center space-x-2 text-sm font-medium bg-white text-brand-black px-3.5 py-2 rounded-lg border border-cream-300 hover:border-caramel hover:text-caramel transition-colors shadow-none"
+            >
+              <ShoppingBag className="w-4 h-4 text-caramel" />
+              <span>Cart</span>
+              <span className="ml-1 px-1.5 py-0.2 bg-cream-200 text-brand-black text-xs font-semibold rounded">
+                0
+              </span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg text-brand-black hover:bg-cream-200 transition-colors focus:outline-none"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
-      )}
-    </header>
+
+        {/* Mobile dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-b border-cream-300 px-4 pt-3 pb-5 space-y-2">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block px-3 py-2 text-base font-medium rounded-md transition-colors ${
+                    isActive
+                      ? 'bg-cream-200 text-caramel font-semibold'
+                      : 'text-brand-black hover:bg-cream-100'
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+            <div className="pt-2 border-t border-cream-200">
+              <Link
+                to="/cart"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3 py-2 text-base font-medium text-brand-black bg-cream-100 rounded-md"
+              >
+                <span className="flex items-center gap-2">
+                  <ShoppingBag className="w-4 h-4 text-caramel" /> View Cart
+                </span>
+                <span className="text-xs bg-cream-300 px-2 py-0.5 rounded font-semibold">0 items</span>
+              </Link>
+            </div>
+          </div>
+        )}
+      </header>
+    </>
   );
 }
+

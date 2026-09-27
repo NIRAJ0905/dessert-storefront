@@ -5,11 +5,17 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   body {
     background-color: #FAF8F5;
     color: #171513;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    letter-spacing: -0.01em;
   }
 }
 
@@ -21,3 +27,4 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
