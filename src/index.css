@@ -27,4 +27,19 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+.hero-title {
+  animation: heroTitle 2s ease-out;
+}
+
+@keyframes heroTitle {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
