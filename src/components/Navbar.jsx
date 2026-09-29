@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { ShoppingBag, Menu as MenuIcon, X } from 'lucide-react';
-import { useScrolled, useScrollProgress } from '../hooks/useScrollAnimations';
+
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const scrolled = useScrolled(60);
-  const progress = useScrollProgress();
+
 
   const navLinks = [
     { to: '/', label: 'Home' },
@@ -17,49 +16,29 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Scroll progress bar ──────────────────────────────────────── */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-cream-200">
-        <div
-          className="h-full bg-caramel transition-all duration-100 ease-linear origin-left"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-
       {/* Subtle bakery status bar */}
       <div
-        className={`bg-brand-black text-cream-100 text-xs py-2 px-4 text-center font-medium tracking-wide transition-all duration-300 overflow-hidden ${
-          scrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-10 opacity-100'
-        }`}
+        className="bg-brand-black text-cream-100 text-xs py-2 px-4 text-center font-medium tracking-wide"
       >
         <span>Fresh oven batches daily at 8:00 AM & 3:30 PM • Counter pickup in Indiranagar</span>
       </div>
 
       {/* ── Main header ─────────────────────────────────────────────── */}
       <header
-        className={`sticky top-0 z-40 border-b border-cream-300 transition-all duration-300 ${
-          scrolled
-            ? 'bg-cream-100/90 backdrop-blur-md shadow-sm'
-            : 'bg-cream-100'
-        }`}
+        className="sticky top-0 z-40 border-b border-cream-300 bg-cream-100"
       >
         <div
-          className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
-            scrolled ? 'h-14' : 'h-20'
-          }`}
+          className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20"
         >
           {/* Brand */}
           <Link to="/" className="flex flex-col group">
             <span
-              className={`font-serif font-semibold tracking-wide text-brand-black group-hover:text-caramel transition-all duration-300 ${
-                scrolled ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'
-              }`}
+              className="font-serif font-semibold tracking-wide text-brand-black group-hover:text-caramel transition-colors text-2xl sm:text-3xl"
             >
               Dessert Bar
             </span>
             <span
-              className={`text-[10px] uppercase tracking-[0.22em] text-brand-muted font-medium transition-all duration-300 ${
-                scrolled ? 'opacity-0 max-h-0' : 'opacity-100 max-h-4'
-              }`}
+              className="text-[10px] uppercase tracking-[0.22em] text-brand-muted font-medium"
             >
               Bakehouse & Patisserie
             </span>

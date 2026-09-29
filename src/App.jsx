@@ -1,6 +1,5 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Cake, ArrowRight } from 'lucide-react';
-import ScrollAnimation from './components/ScrollAnimation';
 
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Menu from './pages/Menu';
@@ -45,8 +44,8 @@ function DealsCarousel() {
 
   const clamp = (val) => Math.max(0, Math.min(val, maxIndex));
 
-  const prev = useCallback(() => setCurrent((c) => clamp(c - 1)), [maxIndex]);
-  const next = useCallback(() => setCurrent((c) => clamp(c + 1)), [maxIndex]);
+  const prev = () => setCurrent((c) => clamp(c - 1));
+  const next = () => setCurrent((c) => clamp(c + 1));
 
   // Reset current if visible count changes and current is out of bounds
   useEffect(() => {
@@ -194,7 +193,7 @@ function DealsCarousel() {
 
 function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-cream-100 text-brand-black"><ScrollAnimation />
+    <div className="min-h-screen flex flex-col bg-cream-100 text-brand-black">
       {/* 1. Navbar */}
       <Navbar />
 
